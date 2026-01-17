@@ -13,4 +13,5 @@ docker run \
     --entrypoint sh \
     -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
     -w "${WORKSPACE_DIR}" \
-    "${CONTAINER_IMAGE}"
+    "${CONTAINER_IMAGE}" \
+    -c "npm install && npm run dev"
