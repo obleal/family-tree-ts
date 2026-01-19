@@ -6,7 +6,7 @@ export const FamilyMemberSchema = z.object({
   last_name: z.string(),
   parent: z.string().nullable(),
   middle_name: z.string().optional(),
-  alias: z.string().optional()
+  alias: z.string().optional(),
 });
 
 export const FamilySchema = z.object({
@@ -20,16 +20,18 @@ export const FamilySchema = z.object({
         if (duplicatedIds.size > 0) console.error(`Duplicate ID: ${[...duplicatedIds].join(", ")}`);
         return duplicatedIds.size === 0;
       },
-      { message: "Duplicate ID found" }
+      { message: "Duplicate family member ID found" }
     )
     .refine(
       (members) => {
         const ids = new Set(members.map(m => m.id));
-        const missingParentsIds = members.map(m => m.parent).filter((p): p is string => p !== null && !ids.has(p));
+        const missingParentsIds = members
+          .map(m => m.parent)
+          .filter((p): p is string => p !== null && !ids.has(p));
         if (missingParentsIds.length > 0) console.error(`Parent ID not found: ${[...new Set(missingParentsIds)].join(", ")}`);
         return missingParentsIds.length === 0;
       },
-      { message: "All parent references must exist in member IDs." }
+      { message: "Parent ID not found in member IDs" }
     )
 });
 
