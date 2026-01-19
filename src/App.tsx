@@ -21,29 +21,26 @@ export default function App() {
 
   const tree: FamilyTreeNode = buildFamilyTree(family.members);
 
-  // Tree statistics
   const totalNodes = countTreeMembers(tree);
   const treeHeight = getTreeHeight(tree);
 
-  // Running counter
   let counter = 1;
 
-  // Recursive function to render names with both counters
-  const renderNames = (nodes: FamilyTreeNode[], prefix: number[] = []) => {
+  // Recursive function with all list items aligned the same
+  const renderRecursiveList = (nodes: FamilyTreeNode[], level = 0) => {
     return (
-      <ul style={{ paddingLeft: `${prefix.length * 20}px`, listStyleType: "none" }}>
-        {nodes.map((node, index) => {
-          // Increment hierarchical prefix
-          const currentPrefix = [...prefix, index + 1];
-          const hierarchicalCounter = currentPrefix.join(".");
+      <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
+        {nodes.map((node) => {
+          const displayName = `${node.first_name} ${node.middle_name ?? ""}${node.last_name} ${
+            node.alias ? `(${node.alias})` : ""
+          }`;
+
           const currentCount = counter++;
 
           return (
             <li key={node.id}>
-              {currentCount}. {hierarchicalCounter} {node.first_name}{" "}
-              {node.middle_name ? node.middle_name + " " : ""}
-              {node.last_name} (Children: {node.children.length}, Level: {prefix.length})
-              {node.children.length > 0 && renderNames(node.children, currentPrefix)}
+              {currentCount}. {displayName.trim()} (Children: {node.children.length}, Level: {level})
+              {node.children.length > 0 && renderRecursiveList(node.children, level + 1)}
             </li>
           );
         })}
@@ -57,7 +54,7 @@ export default function App() {
 
       <div style={{ marginBottom: "1rem" }}>
         <strong>Tree Statistics:</strong>
-        <ul>
+        <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
           <li>Total nodes: {totalNodes}</li>
           <li>Tree height (max generations): {treeHeight}</li>
         </ul>
@@ -65,7 +62,7 @@ export default function App() {
 
       <div>
         <strong>Family Members:</strong>
-        {renderNames([tree])}
+        {renderRecursiveList([tree])}
       </div>
     </div>
   );
