@@ -31,7 +31,7 @@ export default function App() {
     return (
       <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
         {nodes.map((node) => {
-          const displayName = `${node.first_name} ${node.middle_name ?? ""}${node.last_name} ${
+          const displayName = `${node.first_name} ${node.middle_name ?? ""} ${node.last_name} ${
             node.alias ? `(${node.alias})` : ""
           }`;
 
