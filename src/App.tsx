@@ -4,7 +4,7 @@ import { fetchFamily } from "./api/fetchFamily";
 import { buildFamilyTree } from "./api/buildTree";
 import type { FamilyTreeNode } from "./api/buildTree";
 import { Loading } from "./components/Loading";
-import { getTreeHeight, countTreeMembers, getRoots } from "./utils/familyUtils";
+import { getTreeHeight, countTreeMembers } from "./utils/familyUtils";
 
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
@@ -19,12 +19,11 @@ export default function App() {
   if (error) return <div>Error: {error}</div>;
   if (!family) return <Loading />;
 
-  const tree: FamilyTreeNode[] = buildFamilyTree(family.members);
+  const tree: FamilyTreeNode = buildFamilyTree(family.members);
 
   // Tree statistics
   const totalNodes = countTreeMembers(tree);
   const treeHeight = getTreeHeight(tree);
-  const rootCount = getRoots(tree).length;
 
   // Running counter
   let counter = 1;
@@ -60,14 +59,13 @@ export default function App() {
         <strong>Tree Statistics:</strong>
         <ul>
           <li>Total nodes: {totalNodes}</li>
-          <li>Root nodes (founders): {rootCount}</li>
           <li>Tree height (max generations): {treeHeight}</li>
         </ul>
       </div>
 
       <div>
         <strong>Family Members:</strong>
-        {renderNames(tree)}
+        {renderNames([tree])}
       </div>
     </div>
   );

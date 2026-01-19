@@ -33,6 +33,19 @@ export const FamilySchema = z.object({
       },
       { message: "Parent ID not found in member IDs" }
     )
+    .refine(
+      (members) => {
+        const roots = members.filter((m) => m.parent === null);
+        if (roots.length !== 1) {
+          console.error(roots.length === 0
+              ? "No root member found (parent = null required)"
+              : `Multiple root members found: ${roots.map((r) => r.id).join(", ")}`
+          );
+        }
+        return roots.length === 1;
+      },
+      { message: "There must be exactly one root member with parent = null" }
+    )
 });
 
 export type FamilyMember = z.infer<typeof FamilyMemberSchema>;
