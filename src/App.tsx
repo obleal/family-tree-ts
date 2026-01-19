@@ -11,7 +11,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchFamily()
+    fetchFamily("/family.json")
       .then(setFamily)
       .catch((err) => setError(err.message));
   }, []);
