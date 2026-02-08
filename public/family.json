@@ -771,15 +771,17 @@
             "parent": "barbara_rodriguez_armas"
         },
         {
-            "id": "jesus_sierra_rodriguez_child_1_tbd",
-            "first_name": "TBD",
-            "last_name": "TBD",
+            "id": "carollyn_sabina_sierra_pi",
+            "first_name": "Carollyn",
+            "middle_name": "Sabina",
+            "last_name": "Sierra Pi",
             "parent": "jesus_sierra_rodriguez"
         },
         {
-            "id": "jesus_sierra_rodriguez_child_2_tbd",
-            "first_name": "TBD",
-            "last_name": "TBD",
+            "id": "jesus_luis_sierra_pi",
+            "first_name": "Jose",
+            "middle_name": "Luis",
+            "last_name": "Sierra Pi",
             "parent": "jesus_sierra_rodriguez"
         },
         {
@@ -902,20 +904,6 @@
             "parent": "guillermina_rodriguez_hernandez"
         },
         {
-            "id": "carollyn_sabina_sierra_pi",
-            "first_name": "Carollyn",
-            "middle_name": "Sabina",
-            "last_name": "Sierra Pi",
-            "parent": "jesus_sierra_rodriguez"
-        },
-        {
-            "id": "jesus_luis_sierra_pi",
-            "first_name": "Jose",
-            "middle_name": "Luis",
-            "last_name": "Sierra Pi",
-            "parent": "jesus_sierra_rodriguez"
-        },
-        {
             "id": "leila_amelia_sierra",
             "first_name": "Leila",
             "middle_name": "Amelia",
@@ -927,6 +915,6 @@
             "first_name": "TBD",
             "last_name": "TBD",
             "parent": "carmen_villalba_rodriguez"
-        }           
+        }
     ]
 }
