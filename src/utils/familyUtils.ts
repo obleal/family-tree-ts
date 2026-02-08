@@ -4,7 +4,7 @@ import type { FamilyTreeNode } from "../api/buildTree";
  * Recursively find a node by ID
  */
 export function findNodeById(root: FamilyTreeNode, id: string): FamilyTreeNode | null {
-  if (root.id === id) return root;
+  if (root.self.id === id) return root;
   for (const child of root.children) {
     const found = findNodeById(child, id);
     if (found) return found;
@@ -48,7 +48,7 @@ export function countDescendants(node: FamilyTreeNode): number {
  * Level of root is 0
  */
 export function getNodeLevel(root: FamilyTreeNode, id: string, level = 0): number | null {
-  if (root.id === id) return level;
+  if (root.self.id === id) return level;
   for (const child of root.children) {
     const childLevel = getNodeLevel(child, id, level + 1);
     if (childLevel !== null) return childLevel;

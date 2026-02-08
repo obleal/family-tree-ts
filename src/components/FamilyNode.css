@@ -1,29 +1,82 @@
-/* FamilyNode.css */
-.family-node {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #4f46e5, #6366f1); /* vibrant purple-blue gradient */
-  color: white;
-  display: flex;
+/* FamilyNodeButton.css */
+
+.family-node-btn {
+  all: unset;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
+
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  /* Glassy surface */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(243, 244, 246, 0.9)
+  );
+  border: 1px solid rgba(209, 213, 219, 0.8);
+
+  color: #111827;
+
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+
   cursor: pointer;
-  font-weight: 600;
-  font-size: 16px;
-  font-family: 'Inter', sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  /* Modern soft depth */
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 6px 16px rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(6px);
+
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease;
 }
 
-.family-node:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  background: linear-gradient(145deg, #6366f1, #4f46e5); /* gradient shift on hover */
+/* Hover = lift + clarity */
+.family-node-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  background: white;
+  border-color: #c7d2fe;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.12),
+    0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* Optional: subtle text shadow for readability */
-.family-node span {
-  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+/* Keyboard accessibility */
+.family-node-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #c7d2fe,
+    0 0 0 4px rgba(99, 102, 241, 0.5);
+}
+
+/* Active press */
+.family-node-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Selected = data highlight */
+.family-node-btn.selected {
+  background: linear-gradient(
+    180deg,
+    #4f46e5,
+    #4338ca
+  );
+  color: white;
+  border-color: transparent;
+
+  box-shadow:
+    0 4px 12px rgba(79, 70, 229, 0.5),
+    0 12px 28px rgba(79, 70, 229, 0.45);
 }
