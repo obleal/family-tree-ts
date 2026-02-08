@@ -5,6 +5,7 @@ import { buildFamilyTree } from "./api/buildTree";
 import type { FamilyTreeNode } from "./api/buildTree";
 import { Loading } from "./components/Loading";
 import { getTreeHeight, countTreeMembers } from "./utils/familyUtils";
+import { FamilyNode } from "./components/FamilyNode";
 
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
@@ -31,14 +32,13 @@ export default function App() {
     return (
       <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
         {nodes.map((node) => {
-          const displayName = `${node.first_name} ${node.middle_name ?? ""} ${node.last_name} ${
-            node.alias ? `(${node.alias})` : ""
-          }`;
+          const displayName = `${node.self.first_name} ${node.self.middle_name ?? ""} ${node.self.last_name} ${node.self.alias ? `(${node.self.alias})` : ""
+            }`;
 
           const currentCount = counter++;
 
           return (
-            <li key={node.id}>
+            <li key={node.self.id}>
               {currentCount}. {displayName.trim()} (Children: {node.children.length}, Level: {level})
               {node.children.length > 0 && renderRecursiveList(node.children, level + 1)}
             </li>
@@ -63,6 +63,12 @@ export default function App() {
       <div>
         <strong>Family Members:</strong>
         {renderRecursiveList([tree])}
+      </div>
+      <div>
+        <strong>Family Members:</strong>
+        <div>
+          <FamilyNode node={tree} />
+        </div>
       </div>
     </div>
   );
