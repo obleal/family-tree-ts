@@ -641,8 +641,8 @@
             "parent": "remberto_machin_rodriguez"
         },
         {
-            "id": "eredis_machin_iglesias",
-            "first_name": "Eredis",
+            "id": "eredy_machin_iglesias",
+            "first_name": "Eredy",
             "last_name": "Machin Iglesias",
             "parent": "remberto_machin_rodriguez"
         },
@@ -764,9 +764,9 @@
             "parent": "barbara_rodriguez_armas"
         },
         {
-            "id": "barbara_rodriguez_armas_child_1_tbd",
-            "first_name": "TBD",
-            "last_name": "TBD",
+            "id": "carmen_villalba_rodriguez",
+            "first_name": "Carmen",
+            "last_name": "Villalba Rodriguez",
             "parent": "barbara_rodriguez_armas"
         },
         {
@@ -899,6 +899,33 @@
             "middle_name": "Maria",
             "last_name": "Jair Garcia",
             "parent": "guillermina_rodriguez_hernandez"
-        }
+        },
+        {
+            "id": "carollyn_sabina_sierra_pi",
+            "first_name": "Carollyn",
+            "middle_name": "Sabina",
+            "last_name": "Sierra Pi",
+            "parent": "jesus_sierra_rodriguez"
+        },
+        {
+            "id": "jesus_luis_sierra_pi",
+            "first_name": "Jose",
+            "middle_name": "Luis",
+            "last_name": "Sierra Pi",
+            "parent": "jesus_sierra_rodriguez"
+        },
+        {
+            "id": "leila_amelia_sierra",
+            "first_name": "Leila",
+            "middle_name": "Amelia",
+            "last_name": "Sierra",
+            "parent": "jesus_luis_sierra_pi"
+        },
+        {
+            "id": "carmen_villalba_rodriguez_child_1",
+            "first_name": "TBD",
+            "last_name": "TBD",
+            "parent": "carmen_villalba_rodriguez"
+        }           
     ]
 }
