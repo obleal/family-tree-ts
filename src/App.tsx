@@ -8,6 +8,7 @@ import { computeRadialLayout, polarToCartesianSafe } from "./utils/radialLayout"
 import { FamilyNode } from "./components/FamilyNode";
 import { getTreeHeight } from "./utils/familyUtils";
 import { FamilyTreeStatistics } from "./components/FamilyTreeStatistics";
+import { FamilyNodeInfoBox } from "./components/FamilyNodeInfoBox";
 
 const WIDTH = 2000;
 const HEIGHT = 2000;
@@ -38,6 +39,7 @@ export default function App() {
       <h1>{family.name}</h1>
 
       <FamilyTreeStatistics root={tree} />
+      <FamilyNodeInfoBox node={tree} />
 
       <svg width={WIDTH} height={HEIGHT}>
         <g transform={`translate(${CENTER}, ${CENTER})`}>

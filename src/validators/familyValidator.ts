@@ -1,12 +1,12 @@
 import { z } from "zod";
 
 export const FamilyMemberSchema = z.object({
-  id: z.string(),
+  id: z.string().describe("hidden"),
   first_name: z.string(),
-  last_name: z.string(),
-  parent: z.string().nullable(),
   middle_name: z.string().optional(),
+  last_name: z.string(),
   alias: z.string().optional(),
+  parent: z.string().nullable().describe("hidden"),
 });
 
 export const FamilySchema = z.object({
