@@ -9,6 +9,8 @@ import { FamilyNode } from "./components/FamilyNode";
 import { getTreeHeight } from "./utils/familyUtils";
 import { FamilyTreeStatistics } from "./components/FamilyTreeStatistics";
 import { FamilyNodeInfoBox } from "./components/FamilyNodeInfoBox";
+// import "./index.css"
+// import "./App.css"; // Import the CSS for the app
 
 const WIDTH = 2000;
 const HEIGHT = 2000;
@@ -17,6 +19,7 @@ const CENTER = WIDTH / 2;
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedNode, setSelectedNode] = useState<FamilyTreeNode | null>(null);
 
   useEffect(() => {
     fetchFamily("/family.json")
@@ -35,59 +38,86 @@ export default function App() {
 
 
   return (
-    <div style={{ width: "100%", padding: "1rem", fontFamily: "sans-serif" }}>
+    <div
+      style={{
+        width: "100%",
+        padding: "1rem",
+        fontFamily: "sans-serif",
+      }}
+    >
       <h1>{family.name}</h1>
 
       <FamilyTreeStatistics root={tree} />
-      <FamilyNodeInfoBox node={tree} />
 
-      <svg width={WIDTH} height={HEIGHT}>
-        <g transform={`translate(${CENTER}, ${CENTER})`}>
-          {/* Generation rings */}
-          {Array.from({ length: treeHeight-1 }).map((_, i) => (
-            <circle
-              key={i}
-              r={(i + 1) * 120}
-              fill="none"
-              stroke="#eee"
-            />
-          ))}
+      {/* Tree Container */}
+      <div
+        style={{
+          position: "relative",
+          width: WIDTH,
+          height: HEIGHT,
+        }}
+      >
+        {/* Info Box Overlay */}
+        {selectedNode && (
+          <div className="info-overlay">
+            <FamilyNodeInfoBox node={selectedNode} />
+          </div>
+        )}
 
-          {/* Links */}
-          {root.links().map((link, i) => {
-            const source = polarToCartesianSafe(link.source.x, link.source.y);
-            const target = polarToCartesianSafe(link.target.x, link.target.y);
-
-            return (
-              <line
+        {/* SVG */}
+        <svg width={WIDTH} height={HEIGHT}>
+          <g transform={`translate(${CENTER}, ${CENTER})`}>
+            {/* Generation rings */}
+            {Array.from({ length: treeHeight - 1 }).map((_, i) => (
+              <circle
                 key={i}
-                x1={source.x}
-                y1={source.y}
-                x2={target.x}
-                y2={target.y}
-                stroke="#ccc"
+                r={(i + 1) * 120}
+                fill="none"
+                stroke="#eee"
               />
-            );
-          })}
+            ))}
 
-          {/* Nodes */}
-          {root.descendants().map((node, i) => {
-            const { x, y } = polarToCartesianSafe(node.x, node.y);
+            {/* Links */}
+            {root.links().map((link, i) => {
+              const source = polarToCartesianSafe(link.source.x, link.source.y);
+              const target = polarToCartesianSafe(link.target.x, link.target.y);
 
-            return (
-              <foreignObject
-                key={i}
-                x={x - 40}
-                y={y - 16}
-                width={80}
-                height={32}
-              >
-                <FamilyNode node={node.data} />
-              </foreignObject>
-            );
-          })}
-        </g>
-      </svg>
+              return (
+                <line
+                  key={i}
+                  x1={source.x}
+                  y1={source.y}
+                  x2={target.x}
+                  y2={target.y}
+                  stroke="#ccc"
+                />
+              );
+            })}
+
+            {/* Nodes */}
+            {root.descendants().map((node, i) => {
+              const { x, y } = polarToCartesianSafe(node.x, node.y);
+
+              return (
+                <foreignObject
+                  key={i}
+                  x={x - 40}      // center horizontally
+                  y={y - 16}      // center vertically, leave room
+                  width={88}
+                  height={56}     // enough space for padding + scale
+                  overflow="visible"
+                >
+                  <FamilyNode
+                    node={node.data}
+                    onSelect={setSelectedNode}
+                    isSelected={selectedNode?.self.id === node.data.self.id}
+                  />
+                </foreignObject>
+              );
+            })}
+          </g>
+        </svg>
+      </div>
     </div>
   );
 }

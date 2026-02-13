@@ -20,12 +20,18 @@ export function FamilyNodeInfoBox({ node }: { node: FamilyTreeNode }) {
         
     return (
         <div className="family-node-info-box">
+            {/* Header */}
+            <h3 className="info-header">Personal Information</h3>
+
+            {/* Fields */}
             {fields.map((field) => (
                 <p key={field}>
                     <span className="field-name">{formatFieldName(field)}:</span> 
                     <span className="field-value">{formatFieldValue(self[field])}</span>
                 </p>
             ))}
+
+            {/* Number of children */}
             <p>
                 <span className="field-name">Number of Children:</span>
                 <span className="field-value">{node.children.length}</span>
