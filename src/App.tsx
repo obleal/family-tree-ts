@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import type { Family } from "./validators/familyValidator";
-import { fetchFamily } from "./api/fetchFamily";
-import { buildFamilyTree } from "./api/buildTree";
-import type { TreeNode } from "./api/buildTree";
-import { Loading } from "./components/Loading";
-import { computeRadialLayout, polarToCartesianSafe } from "./utils/radialLayout";
-import { FamilyNode } from "./components/FamilyNode";
-import { getTreeHeight } from "./utils/familyUtils";
-import { FamilyTreeStatistics } from "./components/FamilyTreeStatistics";
-import { FamilyNodeInfoBox } from "./components/FamilyNodeInfoBox";
+import type { Family } from "./features/familyTree/validators/familyValidator";
+import { fetchFamily } from "./features/familyTree/api/fetchFamily";
+import { buildFamilyTree } from "./features/familyTree/api/buildTree";
+import type { TreeNode } from "./features/familyTree/api/buildTree";
+import { Loading } from "./components/Loading/Loading";
+import { computeRadialLayout, polarToCartesianSafe } from "./features/familyTree/utils/radialLayout";
+import { FamilyNode } from "./features/familyTree/components/FamilyNode/FamilyNode";
+import { getTreeHeight } from "./features/familyTree/utils/familyUtils";
+import { FamilyTreeStatistics } from "./features/familyTree/components/FamilyTreeStatistics/FamilyTreeStatistics";
+import { FamilyNodeInfoBox } from "./features/familyTree/components/FamilyNodeInfoBox/FamilyNodeInfoBox";
 // import "./index.css"
 // import "./App.css"; // Import the CSS for the app
 

@@ -1,5 +1,5 @@
-import type { TreeNode } from "../api/buildTree";
-import { PersonSchema } from "../validators/familyValidator";
+import type { TreeNode } from "../../../../api/buildTree";
+import { PersonSchema } from "../../validators/familyValidator";
 import "./FamilyNodeInfoBox.css"; // Import the CSS
 
 function formatFieldName(field: string) {

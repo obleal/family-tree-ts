@@ -1,5 +1,5 @@
 import './FamilyNode.css';
-import type { TreeNode } from "../api/buildTree";
+import type { TreeNode } from "../../../../api/buildTree";
 
 export function FamilyNode({
   node,
