@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import type { Family } from "./features/familyTree/validators/familyValidator";
-import { fetchFamily } from "./features/familyTree/api/fetchFamily";
-import { buildFamilyTree } from "./features/familyTree/api/buildTree";
-import type { TreeNode } from "./features/familyTree/api/buildTree";
+import type { Family, FamilyTreeNode} from "./features/familyTree/types/types";
+import { getFamilyData } from "./features/familyTree/api/getFamilyData";
+import { buildFamilyTree } from "./features/familyTree/api/buildFamilyTree";
 import { Loading } from "./components/Loading/Loading";
 import { computeRadialLayout, polarToCartesianSafe } from "./features/familyTree/utils/radialLayout";
+import { getTreeHeight } from "./features/familyTree/utils/familyTreeUtils";
 import { FamilyNode } from "./features/familyTree/components/FamilyNode/FamilyNode";
-import { getTreeHeight } from "./features/familyTree/utils/familyUtils";
 import { FamilyTreeStatistics } from "./features/familyTree/components/FamilyTreeStatistics/FamilyTreeStatistics";
 import { FamilyNodeInfoBox } from "./features/familyTree/components/FamilyNodeInfoBox/FamilyNodeInfoBox";
 // import "./index.css"
@@ -19,10 +18,10 @@ const CENTER = WIDTH / 2;
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
+  const [selectedNode, setSelectedNode] = useState<FamilyTreeNode | null>(null);
 
   useEffect(() => {
-    fetchFamily("/family.json")
+    getFamilyData("/family.json")
       .then(setFamily)
       .catch((err) => setError(err.message));
   }, []);
@@ -30,7 +29,7 @@ export default function App() {
   if (error) return <div>Error: {error}</div>;
   if (!family) return <Loading />;
 
-  const tree: TreeNode = buildFamilyTree(family);
+  const tree: FamilyTreeNode = buildFamilyTree(family);
 
   const treeHeight = getTreeHeight(tree);
 

@@ -1,13 +1,13 @@
+import type { FamilyTreeNode } from "../../types/types";
 import './FamilyNode.css';
-import type { TreeNode } from "../../../../api/buildTree";
 
 export function FamilyNode({
   node,
   onSelect,
   isSelected,
 }: {
-  node: TreeNode;
-  onSelect: (node: TreeNode) => void;
+  node: FamilyTreeNode;
+  onSelect: (node: FamilyTreeNode) => void;
   isSelected?: boolean;
 }) {
   const displayName = node.self.first_name;

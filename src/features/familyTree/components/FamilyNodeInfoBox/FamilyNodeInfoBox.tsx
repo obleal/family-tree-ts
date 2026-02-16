@@ -1,5 +1,5 @@
-import type { TreeNode } from "../../../../api/buildTree";
-import { PersonSchema } from "../../validators/familyValidator";
+import type { FamilyTreeNode } from "../../types/types";
+import { PersonSchema } from "../../types/schemas";
 import "./FamilyNodeInfoBox.css"; // Import the CSS
 
 function formatFieldName(field: string) {
@@ -12,7 +12,7 @@ function formatFieldValue(value: unknown) {
     return value !== null && value !== undefined ? String(value) : "-";
 }
 
-export function FamilyNodeInfoBox({ node }: { node: TreeNode }) {
+export function FamilyNodeInfoBox({ node }: { node: FamilyTreeNode }) {
     const { self } = node;
     const fields = Object.entries(PersonSchema.shape)
         .filter(([_, schema]) => schema.description !== "hidden")

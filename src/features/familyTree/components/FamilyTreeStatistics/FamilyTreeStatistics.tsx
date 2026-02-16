@@ -1,9 +1,9 @@
-import type { TreeNode } from "../../api/buildTree";
-import { getTreeHeight, countTreeMembers } from "./../../utils/familyUtils";
+import type { FamilyTreeNode } from "../../types/types";
+import { getTreeHeight, countAllNodes } from "../../utils/familyTreeUtils";
 import "./FamilyTreeStatistics.css";
 
-export function FamilyTreeStatistics({ root }: { root: TreeNode }) {
-  const totalNodes = countTreeMembers(root);
+export function FamilyTreeStatistics({ root }: { root: FamilyTreeNode }) {
+  const totalNodes = countAllNodes(root);
   const treeHeight = getTreeHeight(root);
 
   return (

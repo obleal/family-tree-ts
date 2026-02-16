@@ -1,16 +1,4 @@
-import type { Person } from "../validators/familyValidator";
-import type { Family } from "../validators/familyValidator";
-
-/**
- * Represents a node in the family tree.
- * 
- * @property self - The `Person` at this node.
- * @property children - Array of child nodes representing this person's direct descendants.
- */
-export interface TreeNode {
-  self: Person;
-  children: TreeNode[];
-}
+import type { Family, FamilyTreeNode } from "../types/types";
 
 /**
   * Build a family tree from a flat list of family members.
@@ -18,13 +6,13 @@ export interface TreeNode {
   * @param family The family object containing the members array.
   * @returns The root node of the family tree.
   */ 
-export function buildFamilyTree(family: Family): TreeNode {
+export function buildFamilyTree(family: Family): FamilyTreeNode {
 
   // Extract members from the family object
   const { members } = family;
 
   // Auxiliar id-to-node map for easy lookup
-  const map = new Map<string, TreeNode>();
+  const map = new Map<string, FamilyTreeNode>();
 
   // Build an id-to-node map and initialize each node with empty children
   members.forEach((m) => {
@@ -32,7 +20,7 @@ export function buildFamilyTree(family: Family): TreeNode {
   });
 
   // Variable to hold the root node
-  let root!: TreeNode;
+  let root!: FamilyTreeNode;
 
   // Populate the children arrays of each node
   map.forEach((node) => {
