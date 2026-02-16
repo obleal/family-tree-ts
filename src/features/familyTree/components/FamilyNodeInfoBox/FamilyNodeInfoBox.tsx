@@ -1,6 +1,6 @@
 import type { FamilyTreeNode } from "../../types/types";
 import { PersonSchema } from "../../types/schemas";
-import "./FamilyNodeInfoBox.css"; // Import the CSS
+import "./FamilyNodeInfoBox.css";
 
 function formatFieldName(field: string) {
     return field
