@@ -1,9 +1,9 @@
-import type { FamilyTreeNode } from "../api/buildTree";
+import type { TreeNode } from "../api/buildTree";
 
 /**
  * Recursively find a node by ID
  */
-export function findNodeById(root: FamilyTreeNode, id: string): FamilyTreeNode | null {
+export function findNodeById(root: TreeNode, id: string): TreeNode | null {
   if (root.self.id === id) return root;
   for (const child of root.children) {
     const found = findNodeById(child, id);
@@ -15,17 +15,17 @@ export function findNodeById(root: FamilyTreeNode, id: string): FamilyTreeNode |
 /**
  * Get number of direct children
  */
-export function getChildrenCount(node: FamilyTreeNode): number {
+export function getChildrenCount(node: TreeNode): number {
   return node.children.length;
 }
 
 /**
  * Get all descendants of a node (excluding the node itself)
  */
-export function getDescendants(node: FamilyTreeNode): FamilyTreeNode[] {
-  const descendants: FamilyTreeNode[] = [];
+export function getDescendants(node: TreeNode): TreeNode[] {
+  const descendants: TreeNode[] = [];
 
-  function traverse(current: FamilyTreeNode) {
+  function traverse(current: TreeNode) {
     for (const child of current.children) {
       descendants.push(child);
       traverse(child);
@@ -39,7 +39,7 @@ export function getDescendants(node: FamilyTreeNode): FamilyTreeNode[] {
 /**
  * Count all descendants
  */
-export function countDescendants(node: FamilyTreeNode): number {
+export function countDescendants(node: TreeNode): number {
   return getDescendants(node).length;
 }
 
@@ -47,7 +47,7 @@ export function countDescendants(node: FamilyTreeNode): number {
  * Get the level of a node in the tree
  * Level of root is 0
  */
-export function getNodeLevel(root: FamilyTreeNode, id: string, level = 0): number | null {
+export function getNodeLevel(root: TreeNode, id: string, level = 0): number | null {
   if (root.self.id === id) return level;
   for (const child of root.children) {
     const childLevel = getNodeLevel(child, id, level + 1);
@@ -59,7 +59,7 @@ export function getNodeLevel(root: FamilyTreeNode, id: string, level = 0): numbe
 /**
  * Count all nodes in the tree including the root
  */
-export function countTreeMembers(root: FamilyTreeNode): number {
+export function countTreeMembers(root: TreeNode): number {
   return 1 + root.children.reduce((sum, child) => sum + countTreeMembers(child), 0);
 }
 
@@ -67,7 +67,7 @@ export function countTreeMembers(root: FamilyTreeNode): number {
  * Get the height of the tree
  * Height of a single node is 1
  */
-export function getTreeHeight(root: FamilyTreeNode): number {
+export function getTreeHeight(root: TreeNode): number {
   if (root.children.length === 0) return 1;
   return 1 + Math.max(...root.children.map(getTreeHeight));
 }

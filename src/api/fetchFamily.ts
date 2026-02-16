@@ -3,6 +3,7 @@ import { FamilySchema } from "../validators/familyValidator";
 
 /**
   * Fetch and validate family data from a JSON file.
+  * 
   * @param fileName The path or URL to the JSON file containing the family data.
   * @returns A promise that resolves to a validated Family object.
   * @throws An error if the fetch fails or if the data is invalid.
@@ -18,7 +19,7 @@ export async function fetchFamily(fileName: string): Promise<Family> {
   // Parse the JSON data
   const data = await response.json();
 
-   // Validate the data against the Family schema and return it or throw an error if invalid
+   // Validate data against the FamilySchema and return it or throw an error if invalid
   try {
     return FamilySchema.parse(data);
   } catch (err: any) {

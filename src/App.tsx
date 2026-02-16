@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Family } from "./validators/familyValidator";
 import { fetchFamily } from "./api/fetchFamily";
 import { buildFamilyTree } from "./api/buildTree";
-import type { FamilyTreeNode } from "./api/buildTree";
+import type { TreeNode } from "./api/buildTree";
 import { Loading } from "./components/Loading";
 import { computeRadialLayout, polarToCartesianSafe } from "./utils/radialLayout";
 import { FamilyNode } from "./components/FamilyNode";
@@ -19,7 +19,7 @@ const CENTER = WIDTH / 2;
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [selectedNode, setSelectedNode] = useState<FamilyTreeNode | null>(null);
+  const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
 
   useEffect(() => {
     fetchFamily("/family.json")
@@ -30,7 +30,7 @@ export default function App() {
   if (error) return <div>Error: {error}</div>;
   if (!family) return <Loading />;
 
-  const tree: FamilyTreeNode = buildFamilyTree(family);
+  const tree: TreeNode = buildFamilyTree(family);
 
   const treeHeight = getTreeHeight(tree);
 

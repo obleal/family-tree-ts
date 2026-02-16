@@ -1,8 +1,8 @@
 import * as d3 from "d3";
-import type { FamilyTreeNode } from "../api/buildTree";
+import type { TreeNode } from "../api/buildTree";
 
 export function computeRadialLayout(
-  tree: FamilyTreeNode,
+  tree: TreeNode,
   radiusStep = 120
 ) {
   const root = d3.hierarchy(tree, d => d.children);
@@ -11,7 +11,7 @@ export function computeRadialLayout(
   const radius = maxDepth * radiusStep;
 
   const layout = d3
-    .tree<FamilyTreeNode>()
+    .tree<TreeNode>()
     .size([2 * Math.PI, radius]);
 
   layout(root);

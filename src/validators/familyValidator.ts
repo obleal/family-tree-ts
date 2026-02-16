@@ -12,39 +12,69 @@ export const PersonSchema = z.object({
 export const FamilySchema = z.object({
   name: z.string(),
   members: z.array(PersonSchema)
+
+    // Check for duplicates
     .refine(
       (members) => {
+
         const ids = new Set<string>();
-        const duplicatedIds = new Set<string>();
-        for (const m of members) if (ids.has(m.id)) duplicatedIds.add(m.id); else ids.add(m.id);
-        if (duplicatedIds.size > 0) console.error(`Duplicate ID: ${[...duplicatedIds].join(", ")}`);
-        return duplicatedIds.size === 0;
-      },
-      { message: "Duplicate family member ID found" }
-    )
-    .refine(
-      (members) => {
-        const ids = new Set(members.map(m => m.id));
-        const missingParentsIds = members
-          .map(m => m.parent)
-          .filter((p): p is string => p !== null && !ids.has(p));
-        if (missingParentsIds.length > 0) console.error(`Parent ID not found: ${[...new Set(missingParentsIds)].join(", ")}`);
-        return missingParentsIds.length === 0;
-      },
-      { message: "Parent ID not found in member IDs" }
-    )
-    .refine(
-      (members) => {
-        const roots = members.filter((m) => m.parent === null);
-        if (roots.length !== 1) {
-          console.error(roots.length === 0
-              ? "No root member found (parent = null required)"
-              : `Multiple root members found: ${roots.map((r) => r.id).join(", ")}`
-          );
+        const duplicates = new Set<string>();
+
+        for (const person of members) {
+          if (ids.has(person.id)) {
+            duplicates.add(person.id);
+          } else {
+            ids.add(person.id);
+          }
         }
+
+        if (duplicates.size > 0) {
+          console.error(`Duplicate ID found: ${[...duplicates].join(", ")}`);
+        }
+
+        return duplicates.size === 0;
+      },
+      { message: "Duplicate ID found" }
+    )
+
+    // Check for missing parent
+    .refine(
+      (members) => {
+
+        const ids = new Set(members.map(member => member.id));
+        const parents = members.map(member => member.parent)
+
+        const missingParents = parents.filter(
+          (parent): parent is string => parent !== null && !ids.has(parent)
+        );
+
+        if (missingParents.length > 0) {
+          console.error(`Parent ID not found: ${[...new Set(missingParents)].join(", ")}`);
+        }
+
+        return missingParents.length === 0;
+      },
+      { message: "Parent ID not found" }
+    )
+
+    // Check for exactly one root
+    .refine(
+      (members) => {
+      
+        const roots = members.filter(member => member.parent === null);
+
+        if (roots.length !== 1) {
+          const errorMessage =
+            roots.length === 0
+              ? "No root found (a parent = null is required)"
+              : `Multiple root found: ${roots.map(r => r.id).join(", ")}`;
+
+          console.error(errorMessage);
+        }
+
         return roots.length === 1;
       },
-      { message: "There must be exactly one root member with parent = null" }
+      { message: "No root or multiple roots found" }
     )
 });
 
