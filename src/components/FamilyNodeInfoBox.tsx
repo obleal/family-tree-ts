@@ -1,5 +1,5 @@
 import type { FamilyTreeNode } from "../api/buildTree";
-import { FamilyMemberSchema } from "../validators/familyValidator";
+import { PersonSchema } from "../validators/familyValidator";
 import "./FamilyNodeInfoBox.css"; // Import the CSS
 
 function formatFieldName(field: string) {
@@ -14,7 +14,7 @@ function formatFieldValue(value: unknown) {
 
 export function FamilyNodeInfoBox({ node }: { node: FamilyTreeNode }) {
     const { self } = node;
-    const fields = Object.entries(FamilyMemberSchema.shape)
+    const fields = Object.entries(PersonSchema.shape)
         .filter(([_, schema]) => schema.description !== "hidden")
         .map(([key]) => key) as (keyof typeof self)[];
         

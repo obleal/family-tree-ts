@@ -1,23 +1,53 @@
-import type { FamilyMember } from "../validators/familyValidator";
+import type { Person } from "../validators/familyValidator";
+import type { Family } from "../validators/familyValidator";
+
 
 export interface FamilyTreeNode {
-  self: FamilyMember;
+  self: Person;
   children: FamilyTreeNode[];
 }
 
-export function buildFamilyTree(members: FamilyMember[]): FamilyTreeNode {
+/**
+  * Build a family tree from a flat list of family members.
+  * @param family The family object containing the members array.
+  * @returns The root node of the family tree.
+  */ 
+export function buildFamilyTree(family: Family): FamilyTreeNode {
+
+  // Extract members from the family object
+  const { members } = family;
+
+  // Auxiliar id-to-node map for easy lookup
   const map = new Map<string, FamilyTreeNode>();
-  members.forEach((m) => { map.set(m.id, { self: m, children: [] }); });
-  let root: FamilyTreeNode | null = null;
+
+  // Build an id-to-node map and initialize each node with empty children
+  members.forEach((m) => {
+    map.set(m.id, { self: m, children: [] });
+  });
+
+  // Variable to hold the root node
+  let root!: FamilyTreeNode;
+
+  // Populate the children arrays of each node
   map.forEach((node) => {
+
+    // If the node has a parent
     if (node.self.parent) {
-      const parentNode = map.get(node.self.parent);
-      if (parentNode) parentNode.children.push(node);
+
+      // Find the parent node 
+      const parent = map.get(node.self.parent)!;
+
+      // Add this node to its children
+      parent.children.push(node);
+
+      // If the node has no parent
     } else {
-      if (root) throw new Error(`Multiple root members found: '${root.self.id}' and '${node.self.id}'`);
+
+      // Is the root of the tree
       root = node;
     }
   });
-  if (!root) throw new Error("No root member found (member without parent)");
+
+  // Return the root node
   return root;
 }

@@ -30,7 +30,7 @@ export default function App() {
   if (error) return <div>Error: {error}</div>;
   if (!family) return <Loading />;
 
-  const tree: FamilyTreeNode = buildFamilyTree(family.members);
+  const tree: FamilyTreeNode = buildFamilyTree(family);
 
   const treeHeight = getTreeHeight(tree);
 

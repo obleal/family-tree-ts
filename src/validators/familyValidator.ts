@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FamilyMemberSchema = z.object({
+export const PersonSchema = z.object({
   id: z.string().describe("hidden"),
   first_name: z.string(),
   middle_name: z.string().optional(),
@@ -11,7 +11,7 @@ export const FamilyMemberSchema = z.object({
 
 export const FamilySchema = z.object({
   name: z.string(),
-  members: z.array(FamilyMemberSchema)
+  members: z.array(PersonSchema)
     .refine(
       (members) => {
         const ids = new Set<string>();
@@ -48,5 +48,5 @@ export const FamilySchema = z.object({
     )
 });
 
-export type FamilyMember = z.infer<typeof FamilyMemberSchema>;
+export type Person = z.infer<typeof PersonSchema>;
 export type Family = z.infer<typeof FamilySchema>;
