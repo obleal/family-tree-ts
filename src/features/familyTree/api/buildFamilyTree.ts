@@ -14,9 +14,9 @@ export function buildFamilyTree(family: Family): FamilyTreeNode {
   // Auxiliar id-to-node map for easy lookup
   const map = new Map<string, FamilyTreeNode>();
 
-  // Build an id-to-node map and initialize each node with empty children
-  members.forEach((m) => {
-    map.set(m.id, { self: m, children: [] });
+  // Fill the id-to-node map and initialize each node with empty children array
+  members.forEach((person) => {
+    map.set(person.id, { self: person, children: [] });
   });
 
   // Variable to hold the root node
