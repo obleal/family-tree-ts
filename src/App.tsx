@@ -11,9 +11,10 @@ import { FamilyNodeInfoBox } from "./features/familyTree/components/FamilyNodeIn
 // import "./index.css"
 // import "./App.css"; // Import the CSS for the app
 
-const WIDTH = 2000;
-const HEIGHT = 2000;
+const WIDTH = 1800;
+const HEIGHT = 1800;
 const CENTER = WIDTH / 2;
+const RADIUS_STEP = 120;
 
 export default function App() {
   const [family, setFamily] = useState<Family | null>(null);
@@ -33,7 +34,7 @@ export default function App() {
 
   const treeHeight = getTreeHeight(tree);
 
-  const root = computeRadialLayout(tree);
+  const root = computeRadialLayout(tree, RADIUS_STEP);
 
 
   return (
@@ -67,10 +68,10 @@ export default function App() {
         <svg width={WIDTH} height={HEIGHT}>
           <g transform={`translate(${CENTER}, ${CENTER})`}>
             {/* Generation rings */}
-            {Array.from({ length: treeHeight - 1 }).map((_, i) => (
+            {Array.from({ length: treeHeight -1 }).map((_, i) => (
               <circle
                 key={i}
-                r={(i + 1) * 120}
+                r={(i + 1) * RADIUS_STEP}
                 fill="none"
                 stroke="#eee"
               />
