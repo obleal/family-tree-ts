@@ -8,8 +8,7 @@ export function computeRadialLayout(
 ) : HierarchyPointNode<FamilyTreeNode> {
   const root = d3.hierarchy(tree, d => d.children);
 
-  const maxDepth = root.height;
-  const radius = maxDepth * radiusStep;
+  const radius = root.height * radiusStep;
 
   const layout = d3
     .tree<FamilyTreeNode>()
