@@ -1,10 +1,11 @@
 import * as d3 from "d3";
+import type { HierarchyPointNode } from "d3-hierarchy";
 import type { FamilyTreeNode } from "../types/types";
 
 export function computeRadialLayout(
   tree: FamilyTreeNode,
   radiusStep = 120
-) {
+) : HierarchyPointNode<FamilyTreeNode> {
   const root = d3.hierarchy(tree, d => d.children);
 
   const maxDepth = root.height;
@@ -14,9 +15,9 @@ export function computeRadialLayout(
     .tree<FamilyTreeNode>()
     .size([2 * Math.PI, radius]);
 
-  layout(root);
+  const layoutRoot = layout(root);
 
-  return root;
+  return layoutRoot;
 }
 
 export function polarToCartesian(angle: number, radius: number) {
