@@ -26,15 +26,3 @@ export function polarToCartesian(angle: number, radius: number) {
     y: radius * Math.sin(angle - Math.PI / 2),
   };
 }
-
-export function polarToCartesianSafe(
-  angle: number | undefined,
-  radius: number | undefined
-) {
-  if (angle == null || radius == null) {
-    return { x: 0, y: 0 };
-  }
-
-  return polarToCartesian(angle, radius);
-}
-

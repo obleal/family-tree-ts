@@ -1,19 +1,17 @@
 import type { HierarchyPointNode } from "d3-hierarchy";
 import type { FamilyTreeNode } from "../../types/types";
-import { polarToCartesianSafe } from "../../utils/radialLayout";
+import { polarToCartesian } from "../../utils/radialLayout";
 import { FamilyNode } from "../FamilyNode/FamilyNode";
 import { WIDTH, HEIGHT, CENTER, RADIUS_STEP } from "./constants";
 
 interface Props {
   layoutRoot: HierarchyPointNode<FamilyTreeNode>;
-  treeHeight: number;
   selectedNode: FamilyTreeNode | null;
   onSelect: (node: FamilyTreeNode) => void;
 }
 
 export function TreeSvg({
   layoutRoot,
-  treeHeight,
   selectedNode,
   onSelect,
 }: Props) {
@@ -23,7 +21,7 @@ export function TreeSvg({
         <g transform={`translate(${CENTER}, ${CENTER})`}>
           
           {/* Rings */}
-          {Array.from({ length: treeHeight - 1 }).map((_, i) => (
+          {Array.from({ length: layoutRoot.height }).map((_, i) => (
             <circle
               key={i}
               r={(i + 1) * RADIUS_STEP}
@@ -34,8 +32,8 @@ export function TreeSvg({
 
           {/* Links */}
           {layoutRoot.links().map((link, i) => {
-            const source = polarToCartesianSafe(link.source.x, link.source.y);
-            const target = polarToCartesianSafe(link.target.x, link.target.y);
+            const source = polarToCartesian(link.source.x, link.source.y);
+            const target = polarToCartesian(link.target.x, link.target.y);
 
             return (
               <line
@@ -51,7 +49,7 @@ export function TreeSvg({
 
           {/* Nodes */}
           {layoutRoot.descendants().map((node, i) => {
-            const { x, y } = polarToCartesianSafe(node.x, node.y);
+            const { x, y } = polarToCartesian(node.x, node.y);
 
             return (
               <foreignObject
