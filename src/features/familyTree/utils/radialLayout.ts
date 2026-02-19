@@ -5,7 +5,7 @@ import type { FamilyTreeNode } from "../types/types";
 export function computeRadialLayout(
   tree: FamilyTreeNode,
   radiusStep = 120
-) : HierarchyPointNode<FamilyTreeNode> {
+): HierarchyPointNode<FamilyTreeNode> {
   const root = d3.hierarchy(tree, d => d.children);
 
   const radius = root.height * radiusStep;
