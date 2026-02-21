@@ -58,6 +58,7 @@ cli() {
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
         -c "echo \"🖥️  OS Version: \$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\" && \
+        echo \"📦 Node Version: \$(node -v)\" && \
         sh \
         "
 }
