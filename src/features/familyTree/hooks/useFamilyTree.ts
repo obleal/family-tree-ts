@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
 import type { Family } from "../types/types";
-import { getFamilyData } from "../api/getFamilyData";
+import { useEffect, useState } from "react";
+import { getData } from "../api/fetch";
 
-export function useFamilyTree(path: string) {
-  const [family, setFamily] = useState<Family | null>(null);
+export function useData(path: string) {
+  const [data, setData] = useState<Family | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getFamilyData(path)
-      .then(setFamily)
+    getData(path)
+      .then(setData)
       .catch((err) => setError(err.message));
   }, [path]);
 
-  return { family, error };
+  return { data, error };
 }

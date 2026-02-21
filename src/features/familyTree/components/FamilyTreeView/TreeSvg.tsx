@@ -1,6 +1,6 @@
 import type { Person } from "../../types/types";
 import type { HierarchyPointNode} from "d3-hierarchy";
-import { polarToCartesian } from "../../utils/radialLayout";
+import { polarToCartesian } from "../../utils/utils";
 import { FamilyNode } from "../FamilyNode/FamilyNode";
 import { WIDTH, HEIGHT, CENTER_X, CENTER_Y, RADIUS_STEP } from "./constants";
 

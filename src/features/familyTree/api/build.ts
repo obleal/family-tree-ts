@@ -21,7 +21,7 @@ export function buildTree({
   const stratifyFunc = d3
     .stratify<Person>()
     .id(d => d.id)
-    .parentId(d => d.parent || null);
+    .parentId(d => d.parent_id || null);
 
   return stratifyFunc(members);
 }

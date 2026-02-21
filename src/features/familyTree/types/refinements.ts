@@ -17,7 +17,7 @@ export const checkDuplicates = (members: Person[]): boolean => {
 
 export const checkMissingParents = (members: Person[]): boolean => {
     const ids = new Set(members.map(person => person.id));
-    const parents = members.map(person => person.parent)
+    const parents = members.map(person => person.parent_id)
 
     const missing = parents.filter(
         (parent): parent is string =>
@@ -31,7 +31,7 @@ export const checkMissingParents = (members: Person[]): boolean => {
 };
 
 export const checkSingleRoot = (members: Person[]): boolean => {
-    const roots = members.filter(person => person.parent === null);
+    const roots = members.filter(person => person.parent_id === null);
 
     if (roots.length !== 1) {
         if (roots.length === 0) {

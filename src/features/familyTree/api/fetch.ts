@@ -8,7 +8,7 @@ import { FamilySchema } from "../types/schemas";
   * @returns A promise that resolves to a validated Family object.
   * @throws An error if the fetch fails or if the data is invalid.
   */
-export async function getFamilyData(source: string): Promise<Family> {
+export async function getData(source: string): Promise<Family> {
 
   // Network request to fetch JSON file 
   const response = await fetch(source);

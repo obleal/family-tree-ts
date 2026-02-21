@@ -23,14 +23,6 @@
     color: #555;
 }
 
-.info-overlay {
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  z-index: 50;
-  pointer-events: none; /* prevents blocking tree clicks */
-}
-
 .info-header {
   font-size: 16px;
   font-weight: 600;
