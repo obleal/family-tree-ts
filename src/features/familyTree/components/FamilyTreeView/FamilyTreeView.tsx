@@ -6,7 +6,7 @@ import { FamilyTreeStatistics } from "../FamilyTreeStatistics/FamilyTreeStatisti
 import { FamilyNodeInfoBox } from "../FamilyNodeInfoBox/FamilyNodeInfoBox";
 import { TreeSvg } from "./TreeSvg";
 import { RADIUS_STEP } from "./constants";
-
+import "./FamilyTreeView.css";
 
 export function FamilyTreeView({
   family
@@ -14,16 +14,15 @@ export function FamilyTreeView({
   family: Family;
 }) {
   const [selectedNode, setSelectedNode] = useState<HierarchyPointNode<Person> | null>(null);
-  
+
   const tree = buildAndLayoutTree({ family: family, radiusStep: RADIUS_STEP });
 
   return (
     <>
       <h1>{family.name}</h1>
 
-      <FamilyTreeStatistics root={tree} />
-
-      <div>
+      <div className="family-info-panel">
+        <FamilyTreeStatistics root={tree} />
         <FamilyNodeInfoBox node={selectedNode} />
       </div>
 

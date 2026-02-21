@@ -18,9 +18,8 @@ interface Props {
 }
 
 export function FamilyNodeInfoBox({ node }: Props) {
-    if (!node) return null; // gracefully handle undefined
-
-    const person = node.data;
+    // Use actual data if node exists, otherwise default empty values
+    const person: Partial<Person> = node?.data ?? {};
 
     const fields = Object.entries(PersonSchema.shape)
         .filter(([_, schema]) => schema.description !== "hidden")
@@ -42,14 +41,13 @@ export function FamilyNodeInfoBox({ node }: Props) {
             {/* Number of children */}
             <p>
                 <span className="field-name">Number of Children:</span>
-                <span className="field-value">{node.children?.length ?? 0}</span>
+                <span className="field-value">{node ? node.children?.length ?? 0 : "-"}</span>
             </p>
 
-            {/* Number of descendants (exclude self) */}
+            {/* Number of descendants */}
             <p>
                 <span className="field-name">Number of Descendants:</span>
-                <span className="field-value">{node.descendants().length - 1}
-                </span>
+                <span className="field-value">{node ? node.descendants().length - 1 : "-"}</span>
             </p>
         </div>
     );

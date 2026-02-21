@@ -1,52 +1,45 @@
+/* Unified style for stats box to match info box */
 .family-tree-stats {
-  display: inline-block;
-  padding: 14px 16px;
-  margin-bottom: 16px;
-
-  border-radius: 12px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(243, 244, 246, 0.9)
-  );
-
-  border: 1px solid rgba(209, 213, 219, 0.8);
-
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.06),
-    0 10px 24px rgba(0, 0, 0, 0.08);
-
-  backdrop-filter: blur(6px);
+    background-color: #f9f9f9;          /* Light gray background */
+    border: 1px solid #ccc;             /* Subtle border */
+    border-radius: 8px;                  /* Rounded corners */
+    padding: 16px;                       /* Inner spacing */
+    max-width: 300px;                    /* Optional width */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Soft shadow */
+    font-family: system-ui, sans-serif;
+    margin-bottom: 16px;
 }
 
 .stats-header {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 10px;
+    font-size: 16px;                     /* Match info box header */
+    font-weight: 600;
+    margin: 0 0 12px 0;                  /* space below header */
+    border-bottom: 1px solid rgba(0,0,0,0.1); /* subtle line */
+    padding-bottom: 4px;
+    color: #111827;
 }
 
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(80px, 1fr));
-  gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+    gap: 12px;
 }
 
 .stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .stat-label {
-  font-size: 11px;
-  color: #6b7280; /* gray-500 */
+    font-size: 11px;
+    color: #555; /* darker gray to match info box field values */
+    font-weight: 600;
 }
 
 .stat-value {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  color: #4f46e5; /* indigo-600 */
+    font-size: 16px;                     /* closer to info box text size */
+    font-weight: 700;
+    color: #333;                          /* dark color to match info box */
+    line-height: 1.4;
 }
