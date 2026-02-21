@@ -1,47 +1,85 @@
-import type { Family, FamilyTreeNode } from "../types/types";
+import * as d3 from "d3";
+import type { HierarchyNode, HierarchyPointNode } from "d3-hierarchy";
+import type { Family, Person } from "../types/types";
 
 /**
-  * Build a family tree from a flat list of family members.
-  * 
-  * @param family The family object containing the members array.
-  * @returns The root node of the family tree.
-  */ 
-export function buildFamilyTree(family: Family): FamilyTreeNode {
+ * Build a hierarchical family tree from a flat array of members.
+ * Each node wraps the original member in `data` and includes `children`, `parent`, `depth`, and `height`.
+ * See https://d3js.org/d3-hierarchy/hierarchy for hierarchy details.
+ *
+ * @param family - Object containing a a flat `members` array.
+ * @returns The root of the family tree as HierarchyNode<Person>.
+ */
+export function buildTree({
+  family,
+}: {
+  family: Family;
+}): HierarchyNode<Person> {
 
-  // Extract members from the family object
   const { members } = family;
 
-  // Auxiliar id-to-node map for easy lookup
-  const map = new Map<string, FamilyTreeNode>();
+  const stratifyFunc = d3
+    .stratify<Person>()
+    .id(d => d.id)
+    .parentId(d => d.parent || null);
 
-  // Fill the id-to-node map and initialize each node with empty children array
-  members.forEach((person) => {
-    map.set(person.id, { self: person, children: [] });
-  });
+  return stratifyFunc(members);
+}
 
-  // Variable to hold the root node
-  let root!: FamilyTreeNode;
+/**
+ * Apply a radial layout to an existing hierarchy.
+ *
+ * Adds `x` and `y` coordinates to each node using d3.tree().
+ *
+ * @param tree - Root hierarchy node.
+ * @param radiusStep - Distance between generations.
+ * @returns Root node as HierarchyPointNode<Person>.
+ */
+export function layoutTree({
+  tree,
+  radiusStep = 120,
+}: {
+  tree: HierarchyNode<Person>;
+  radiusStep?: number;
+}): HierarchyPointNode<Person> {
 
-  // Populate the children arrays of each node
-  map.forEach((node) => {
+  // Optional sorting (mutates hierarchy)
+  tree.sort((a, b) => d3.descending(a.data.first_name, b.data.first_name));
 
-    // If the node has a parent
-    if (node.self.parent) {
+  // Calculate outer radius
+  const radius = tree.height * radiusStep;
 
-      // Find the parent node 
-      const parent = map.get(node.self.parent)!;
+  // Create layout func
+  const layoutFunc = d3
+    .tree<Person>()
+    .size([2 * Math.PI, radius])
+    .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth);
 
-      // Add this node to its children
-      parent.children.push(node);
+  // Return the tree root with layout coordinates
+  return layoutFunc(tree);
+}
 
-      // If the node has no parent
-    } else {
+/**
+ * Convenience function that builds the hierarchy
+ * and immediately applies the radial layout.
+ *
+ * Useful when the tree does not need to be manipulated
+ * between build and layout steps.
+ *
+ * @param family - Family object containing flat member data.
+ * @param radiusStep - Optional generation spacing (default: 120).
+ * @returns Root node with layout coordinates (HierarchyPointNode<Person>).
+ */
+export function buildAndLayoutTree({
+  family,
+  radiusStep = 120,
+}: {
+  family: Family;
+  radiusStep?: number;
+}): HierarchyPointNode<Person> {
 
-      // Is the root of the tree
-      root = node;
-    }
-  });
+  const tree = buildTree({ family: family });
+  const treeLayout = layoutTree({ tree: tree, radiusStep: radiusStep });
 
-  // Return the root node
-  return root;
+  return treeLayout;
 }

@@ -1,11 +1,12 @@
-import type { FamilyTreeNode } from "../../types/types";
-import { getTreeHeight, countAllNodes } from "../../utils/familyTreeUtils";
+import type { Person } from "../../types/types";
+import type { HierarchyPointNode } from "d3-hierarchy";
 import "./FamilyTreeStatistics.css";
 
-export function FamilyTreeStatistics({ root }: { root: FamilyTreeNode }) {
-  const totalNodes = countAllNodes(root);
-  const treeHeight = getTreeHeight(root);
+interface Props {
+  root: HierarchyPointNode<Person>;
+}
 
+export function FamilyTreeStatistics({ root }: Props) {
   return (
     <div className="family-tree-stats">
       <div className="stats-header">
@@ -15,12 +16,12 @@ export function FamilyTreeStatistics({ root }: { root: FamilyTreeNode }) {
       <div className="stats-grid">
         <div className="stat-item">
           <span className="stat-label">Members</span>
-          <span className="stat-value">{totalNodes}</span>
+          <span className="stat-value">{root.descendants().length}</span>
         </div>
 
         <div className="stat-item">
           <span className="stat-label">Generations</span>
-          <span className="stat-value">{treeHeight}</span>
+          <span className="stat-value">{root.height + 1}</span>
         </div>
       </div>
     </div>

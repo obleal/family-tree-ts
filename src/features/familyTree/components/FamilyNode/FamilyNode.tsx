@@ -1,23 +1,20 @@
-import type { FamilyTreeNode } from "../../types/types";
+import type { HierarchyPointNode } from "d3-hierarchy";
+import type { Person } from "../../types/types";
 import './FamilyNode.css';
 
-export function FamilyNode({
-  node,
-  onSelect,
-  isSelected,
-}: {
-  node: FamilyTreeNode;
-  onSelect: (node: FamilyTreeNode) => void;
+interface Props {
+  node: HierarchyPointNode<Person>;
+  onSelect: (person: HierarchyPointNode<Person>) => void;
   isSelected?: boolean;
-}) {
-  const displayName = node.self.first_name;
+}
 
+export function FamilyNode({ node, onSelect, isSelected }: Props) {
   return (
     <button
       className={`family-node-btn ${isSelected ? "selected" : ""}`}
       onClick={() => onSelect(node)}
     >
-      {displayName}
+      {node.data.first_name}
     </button>
   );
 }

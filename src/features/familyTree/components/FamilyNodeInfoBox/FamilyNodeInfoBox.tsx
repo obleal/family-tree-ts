@@ -1,6 +1,6 @@
-import type { FamilyTreeNode } from "../../types/types";
+import type { Person } from "../../types/types";
+import type { HierarchyPointNode } from "d3-hierarchy";
 import { PersonSchema } from "../../types/schemas";
-import { countDescendants } from "../../utils/familyTreeUtils";
 import "./FamilyNodeInfoBox.css";
 
 function formatFieldName(field: string) {
@@ -13,11 +13,18 @@ function formatFieldValue(value: unknown) {
     return value !== null && value !== undefined ? String(value) : "-";
 }
 
-export function FamilyNodeInfoBox({ node }: { node: FamilyTreeNode }) {
-    const { self } = node;
+interface Props {
+    node?: HierarchyPointNode<Person> | null;
+}
+
+export function FamilyNodeInfoBox({ node }: Props) {
+    if (!node) return null; // gracefully handle undefined
+
+    const person = node.data;
+
     const fields = Object.entries(PersonSchema.shape)
         .filter(([_, schema]) => schema.description !== "hidden")
-        .map(([key]) => key) as (keyof typeof self)[];
+        .map(([key]) => key) as (keyof Person)[];
 
     return (
         <div className="family-node-info-box">
@@ -28,19 +35,21 @@ export function FamilyNodeInfoBox({ node }: { node: FamilyTreeNode }) {
             {fields.map((field) => (
                 <p key={field}>
                     <span className="field-name">{formatFieldName(field)}:</span>
-                    <span className="field-value">{formatFieldValue(self[field])}</span>
+                    <span className="field-value">{formatFieldValue(person[field])}</span>
                 </p>
             ))}
 
             {/* Number of children */}
             <p>
                 <span className="field-name">Number of Children:</span>
-                <span className="field-value">{node.children.length}</span>
+                <span className="field-value">{node.children?.length ?? 0}</span>
             </p>
-            {/* Number of descendants */}
+
+            {/* Number of descendants (exclude self) */}
             <p>
                 <span className="field-name">Number of Descendants:</span>
-                <span className="field-value">{countDescendants(node)}</span>
+                <span className="field-value">{node.descendants().length - 1}
+                </span>
             </p>
         </div>
     );

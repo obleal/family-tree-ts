@@ -1,21 +1,20 @@
+import type { HierarchyPointNode } from "d3-hierarchy";
+import type { Family, Person } from "../../types/types";
 import { useState } from "react";
-import type { Family, FamilyTreeNode } from "../../types/types";
-import { buildFamilyTree } from "../../api/buildFamilyTree";
-import { computeRadialLayout } from "../../utils/radialLayout";
+import { buildAndLayoutTree } from "../../api/buildFamilyTree";
 import { FamilyTreeStatistics } from "../FamilyTreeStatistics/FamilyTreeStatistics";
 import { FamilyNodeInfoBox } from "../FamilyNodeInfoBox/FamilyNodeInfoBox";
 import { TreeSvg } from "./TreeSvg";
 import { RADIUS_STEP } from "./constants";
 
-interface Props {
+
+export function FamilyTreeView({
+  family
+}: {
   family: Family;
-}
-
-export function FamilyTreeView({ family }: Props) {
-  const [selectedNode, setSelectedNode] = useState<FamilyTreeNode | null>(null);
-
-  const tree = buildFamilyTree(family);
-  const layoutRoot = computeRadialLayout(tree, RADIUS_STEP);
+}) {
+  const [selectedNode, setSelectedNode] = useState<HierarchyPointNode<Person> | null>(null);
+  const tree = buildAndLayoutTree({ family: family, radiusStep: RADIUS_STEP });
 
   return (
     <>
@@ -23,14 +22,12 @@ export function FamilyTreeView({ family }: Props) {
 
       <FamilyTreeStatistics root={tree} />
 
-      {selectedNode && (
-        <div className="info-overlay">
-          <FamilyNodeInfoBox node={selectedNode} />
-        </div>
-      )}
+      <div className="info-overlay">
+        <FamilyNodeInfoBox node={selectedNode} />
+      </div>
 
       <TreeSvg
-        layoutRoot={layoutRoot}
+        root={tree}
         selectedNode={selectedNode}
         onSelect={setSelectedNode}
       />

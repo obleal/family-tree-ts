@@ -1,35 +1,36 @@
-import type { HierarchyPointNode } from "d3-hierarchy";
-import type { FamilyTreeNode } from "../../types/types";
+import type { Person } from "../../types/types";
+import type { HierarchyPointNode} from "d3-hierarchy";
 import { polarToCartesian } from "../../utils/radialLayout";
 import { FamilyNode } from "../FamilyNode/FamilyNode";
 import { WIDTH, HEIGHT, CENTER_X, CENTER_Y, RADIUS_STEP } from "./constants";
 
 interface Props {
-  layoutRoot: HierarchyPointNode<FamilyTreeNode>;
-  selectedNode: FamilyTreeNode | null;
-  onSelect: (node: FamilyTreeNode) => void;
+  root: HierarchyPointNode<Person>;
+  selectedNode: HierarchyPointNode<Person> | null;
+  onSelect: (node: HierarchyPointNode<Person>) => void;
 }
 
-export function TreeSvg({ layoutRoot, selectedNode, onSelect }: Props) {
+
+export function TreeSvg({ root, selectedNode, onSelect }: Props) {
   // Container dimensions
   const width = WIDTH;
   const height = HEIGHT;
   const cx = CENTER_X;
   const cy = CENTER_Y;
-
+  
   return (
     <div style={{ position: "relative", width, height }}>
       <svg width={width} height={height}>
         <g transform={`translate(${cx}, ${cy})`}>
           
           {/* Rings */}
-          {Array.from({ length: layoutRoot.height }).map((_, i) => {
+          {Array.from({ length: root.height }).map((_, i) => {
             const radius = (i + 1) * RADIUS_STEP;
             return <circle key={i} r={radius} fill="none" stroke="#eee" />;
           })}
 
           {/* Links */}
-          {layoutRoot.links().map((link, i) => {
+          {root.links().map((link, i) => {
             const source = polarToCartesian(link.source.x, link.source.y);
             const target = polarToCartesian(link.target.x, link.target.y);
             return (
@@ -45,9 +46,9 @@ export function TreeSvg({ layoutRoot, selectedNode, onSelect }: Props) {
           })}
 
           {/* Nodes */}
-          {layoutRoot.descendants().map((node, i) => {
+          {root.descendants().map((node, i) => {
             const { x, y } = polarToCartesian(node.x, node.y);
-            const isSelected = selectedNode?.self.id === node.data.self.id;
+            const isSelected = selectedNode?.data.id === node.data.id;
 
             return (
               <foreignObject
@@ -58,7 +59,7 @@ export function TreeSvg({ layoutRoot, selectedNode, onSelect }: Props) {
                 height={56}
                 overflow="visible"
               >
-                <FamilyNode node={node.data} onSelect={onSelect} isSelected={isSelected} />
+                <FamilyNode node={node} onSelect={onSelect} isSelected={isSelected} />
               </foreignObject>
             );
           })}
