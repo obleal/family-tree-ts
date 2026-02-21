@@ -19,18 +19,25 @@ export function FamilyTreeView({
 
   return (
     <>
-      <h1>{family.name}</h1>
-
+      {/* Left fixed panel */}
       <div className="family-info-panel">
+        <h1>{family.name}</h1>
+
+        {/* Tree stats */}
         <FamilyTreeStatistics root={tree} />
+
+        {/* Selected node info */}
         <FamilyNodeInfoBox node={selectedNode} />
       </div>
 
-      <TreeSvg
-        root={tree}
-        selectedNode={selectedNode}
-        onSelect={setSelectedNode}
-      />
+      {/* Tree area */}
+      <div className="tree-container">
+        <TreeSvg
+          root={tree}
+          selectedNode={selectedNode}
+          onSelect={setSelectedNode}
+        />
+      </div>
     </>
   );
 }

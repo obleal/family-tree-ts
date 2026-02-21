@@ -10,7 +10,7 @@ export function FamilyTreeStatistics({ root }: Props) {
   return (
     <div className="family-tree-stats">
       <div className="stats-header">
-        Family Tree Overview
+        Overview
       </div>
 
       <div className="stats-grid">
