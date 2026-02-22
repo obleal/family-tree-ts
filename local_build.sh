@@ -61,10 +61,12 @@ deploy() {
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
         -c " \
+        rm -rf '${SCRIPT_DIR}/node_modules' && \
+        rm -rf '${SCRIPT_DIR}/dist' && \
         apk add --no-cache --quiet git && \
         git config --global user.name \"\$GIT_USER_NAME\" && \
         git config --global user.email \"\$GIT_USER_EMAIL\" && \
-        git config --global --add safe.directory /workspace &&
+        git config --global --add safe.directory /workspace && \
         npm run deploy --silent -- --repo=https://obleal:\$GITHUB_READ_ONLY_TOKEN@github.com/obleal/family-tree-ts.git"
 }
 
