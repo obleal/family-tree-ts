@@ -1,0 +1,45 @@
+/* Unified style for stats box to match info box */
+.family-tree-stats {
+    background-color: #f9f9f9;          /* Light gray background */
+    border: 1px solid #ccc;             /* Subtle border */
+    border-radius: 8px;                  /* Rounded corners */
+    padding: 16px;                       /* Inner spacing */
+    max-width: 300px;                    /* Optional width */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Soft shadow */
+    font-family: system-ui, sans-serif;
+    margin-bottom: 16px;
+}
+
+.stats-header {
+    font-size: 16px;                     /* Match info box header */
+    font-weight: 600;
+    margin: 0 0 12px 0;                  /* space below header */
+    border-bottom: 1px solid rgba(0,0,0,0.1); /* subtle line */
+    padding-bottom: 4px;
+    color: #111827;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(80px, 1fr));
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #555; /* darker gray to match info box field values */
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 16px;                     /* closer to info box text size */
+    font-weight: 700;
+    color: #333;                          /* dark color to match info box */
+    line-height: 1.4;
+}

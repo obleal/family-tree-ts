@@ -1,0 +1,21 @@
+/* Fixed left info panel */
+.family-info-panel {
+  position: fixed;        /* fixed on screen */
+  top: 0;                 /* start at top */
+  left: 0;                /* align left */
+  bottom: 0;              /* stretch to bottom */
+  width: 320px;           /* fixed width */
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ccc;  /* subtle separator from tree */
+  box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+  overflow-y: auto;       /* scroll if content exceeds height */
+  font-family: system-ui, sans-serif;
+  z-index: 100;           /* stay above tree */
+}
+
+/* Tree container takes remaining space */
+.tree-container {
+  margin-left: 320px;     /* leave space for left panel */
+  position: relative;     /* for absolute elements inside */
+}

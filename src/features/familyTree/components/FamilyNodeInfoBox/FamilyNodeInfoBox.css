@@ -1,0 +1,33 @@
+.family-node-info-box {
+    background-color: #f9f9f9;        /* Light gray background */
+    border: 1px solid #ccc;           /* Subtle border */
+    border-radius: 8px;               /* Rounded corners */
+    padding: 16px;                    /* Padding inside the box */
+    max-width: 300px;                 /* Optional width */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Soft shadow */
+    font-family: system-ui, sans-serif;
+}
+
+.family-node-info-box p {
+    margin: 6px 0;                    /* Space between lines */
+    line-height: 1.4;
+}
+
+.family-node-info-box .field-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.family-node-info-box .field-value {
+    margin-left: 6px;
+    color: #555;
+}
+
+.info-header {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;  /* top=0, bottom=12px, remove default top space */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 4px;
+  color: #111827;
+}
