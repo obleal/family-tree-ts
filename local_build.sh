@@ -30,8 +30,7 @@ build() {
         "${CONTAINER_IMAGE}" \
         -c " \
         echo '🧹 Cleaning...' && \
-        rm -rf '${SCRIPT_DIR}/node_modules' && \
-        rm -rf '${SCRIPT_DIR}/dist' && \
+        rm -rf node_modules dist && \
         echo '⚙️  Building...' && \
         npm install --silent && \
         echo '✅ Build complete' \
@@ -69,8 +68,7 @@ deploy() {
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
         -c " \
-        rm -rf '${SCRIPT_DIR}/node_modules' && \
-        rm -rf '${SCRIPT_DIR}/dist' && \
+        rm -rf node_modules dist && \
         echo '📦 Installing dependencies...' && \
         apk add --no-cache --quiet git && \
         git config --global user.name \"\$GIT_USER_NAME\" && \
