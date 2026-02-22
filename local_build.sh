@@ -46,18 +46,26 @@ run() {
 }
 
 deploy() {
+    readonly GITHUB_READ_ONLY_TOKEN="$(pass GITHUB/READ_ONLY_TOKEN)"
+    readonly GIT_USER_NAME="$(git config --global user.name)"
+    readonly GIT_USER_EMAIL="$(git config --global user.email)"
     docker run \
         --rm \
         -it \
         --entrypoint sh \
         --network host \
+        -e GIT_USER_NAME="$GIT_USER_NAME" \
+        -e GIT_USER_EMAIL="$GIT_USER_EMAIL" \
+        -e GITHUB_READ_ONLY_TOKEN="$(pass GITHUB/READ_ONLY_TOKEN)" \
         -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
         -c " \
         apk add --no-cache --quiet git && \
+        git config --global user.name \"\$GIT_USER_NAME\" && \
+        git config --global user.email \"\$GIT_USER_EMAIL\" && \
         git config --global --add safe.directory /workspace &&
-        npm run deploy --silent"
+        npm run deploy --silent -- --repo=https://obleal:\$GITHUB_READ_ONLY_TOKEN@github.com/obleal/family-tree-ts.git"
 }
 
 cli() {
