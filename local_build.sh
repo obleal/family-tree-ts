@@ -10,6 +10,7 @@ docker pull "${CONTAINER_IMAGE}"
 clean() {
     echo "🧹 Cleaning..."
     sudo rm -rf "${SCRIPT_DIR}/node_modules"
+    sudo rm -rf "${SCRIPT_DIR}/dist"
 }
 
 build() {
@@ -20,8 +21,10 @@ build() {
         -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
-        -c "echo '🧹 Cleaning...' && \
+        -c " \
+        echo '🧹 Cleaning...' && \
         rm -rf '${SCRIPT_DIR}/node_modules' && \
+        rm -rf '${SCRIPT_DIR}/dist' && \
         echo '⚙️  Building...' && \
         npm ci --silent && \
         echo '✅ Build complete' \
@@ -37,7 +40,24 @@ run() {
         -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
-        -c "npm run dev --silent"
+        -c " \
+        echo '🚀 Running dev server...' && \
+        npm run dev --silent"
+}
+
+deploy() {
+    docker run \
+        --rm \
+        -it \
+        --entrypoint sh \
+        --network host \
+        -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
+        -w "${WORKSPACE_DIR}" \
+        "${CONTAINER_IMAGE}" \
+        -c " \
+        apk add --no-cache --quiet git && \
+        git config --global --add safe.directory /workspace &&
+        npm run deploy --silent"
 }
 
 cli() {
@@ -48,19 +68,22 @@ cli() {
         -v "${SCRIPT_DIR}":"${WORKSPACE_DIR}" \
         -w "${WORKSPACE_DIR}" \
         "${CONTAINER_IMAGE}" \
-        -c "echo \"🖥️  OS Version: \$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\" && \
+        -c " \
+        echo \"🖥️  OS Version: \$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"')\" && \
+        echo \"📦 Node Version: \$(node -v)\" && \
         sh \
         "
 }
 
 usage() {
-    echo "Usage: $0 {build|run|clean|cli}"
+    echo "Usage: $0 {build|run|deploy|clean|cli}"
     exit 1
 }
 
 case "${1:-}" in
     build) build ;;
     run)   run ;;
+    deploy) deploy ;;
     clean) clean ;;
     cli)   cli;;
     *)     usage ;;
