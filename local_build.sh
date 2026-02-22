@@ -63,10 +63,12 @@ deploy() {
         -c " \
         rm -rf '${SCRIPT_DIR}/node_modules' && \
         rm -rf '${SCRIPT_DIR}/dist' && \
+        echo '📦 Installing dependencies...' && \
         apk add --no-cache --quiet git && \
         git config --global user.name \"\$GIT_USER_NAME\" && \
         git config --global user.email \"\$GIT_USER_EMAIL\" && \
         git config --global --add safe.directory /workspace && \
+        echo '⚙️  Building...' && \
         npm run deploy --silent -- --repo=https://obleal:\$GITHUB_READ_ONLY_TOKEN@github.com/obleal/family-tree-ts.git"
 }
 
