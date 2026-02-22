@@ -4,7 +4,7 @@ import { useData } from "./features/familyTree/hooks/useFamilyTree";
 import { FamilyTreeView } from "./features/familyTree/components/FamilyTreeView/FamilyTreeView";
 
 export default function App() {
-  const { data, error } = useData("/family.json");
+  const { data, error } = useData(`${import.meta.env.BASE_URL}family.json`);
 
   if (error) return <div className="app-error">Error: {error}</div>;
   if (!data) return <Loading />;
